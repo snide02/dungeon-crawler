@@ -41,14 +41,16 @@ public class MovementBehavior : MonoBehaviour
 
 
                 Vector2Int least = selected;
-                int distance = GridOccupant.ManhattanDistanceTo(selected, target);
+                int distance = GridOccupant.EuclideanDistanceSquareTo(selected, target);
 
-                for (int i = 1; i < candidates.Length; i +=1 ) {
+                for (int i = 0; i < candidates.Length; i +=1 ) {
 
                     Vector2Int sel = candidates[i];
-                    int dist = GridOccupant.ManhattanDistanceTo(sel, target);
+                    int dist = GridOccupant.EuclideanDistanceSquareTo(sel, target);
 
                     if (dist < distance) {
+
+                        Debug.Log( "Choose new min " + least + " - "+ sel + " -  " + dist);
                         least = sel;
                         distance = dist;
                     }
@@ -56,9 +58,11 @@ public class MovementBehavior : MonoBehaviour
 
 
                 if (least == selected) {
+                    Debug.Log( "Skip next least " + least + " - " + selected);
                     break;
                 } else {
                     selected = least;
+                     Debug.Log( "Choose next least " + least);
                   
                 }
           
