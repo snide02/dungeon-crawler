@@ -1,18 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 /**
 
 Implement  the TurnBasedObject interface in the contorller class of your objects
 **/
-public interface TurnBasedObject 
+public class TurnBasedObject : MonoBehaviour
 {
-    void StartTurn();
 
-    bool IsActive {get; set;}
 
-    GameObject GameObject {get; set;}
+    public UnityAction OnStartTurn;
 
+    void Start() {
+        OnEnable();
+    }
+
+    public void StartTurn() {
+
+        if (OnStartTurn != null) {
+            OnStartTurn();
+        }
+
+    }
+
+     void OnEnable() {
+        if (GameManager.TurnOrderManager != null) {
+            GameManager.TurnOrderManager.Register(this);
+        }
+    }
+
+    void OnDisable() {
+        if (GameManager.TurnOrderManager != null) {
+            GameManager.TurnOrderManager.Unregister(this);
+        }
+    }
+
+
+   
 }

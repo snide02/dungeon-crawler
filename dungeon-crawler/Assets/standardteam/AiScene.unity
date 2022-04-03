@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 447366102}
   - component: {fileID: 447366101}
   - component: {fileID: 447366105}
+  - component: {fileID: 447366103}
   m_Layer: 0
   m_Name: DummyBox
   m_TagString: Untagged
@@ -169,6 +170,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldGrid: {fileID: 1035201997}
   positionAnchor: {fileID: 447366104}
+--- !u!114 &447366103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447366100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996694fea4f5347e395ed33b9c39ab48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &447366104
 Transform:
   m_ObjectHideFlags: 0
@@ -199,6 +212,7 @@ MonoBehaviour:
   camera: {fileID: 1671852463}
   movementBehavior: {fileID: 447366101}
   gridOccupant: {fileID: 447366102}
+  turnBased: {fileID: 447366103}
 --- !u!1 &1035201996
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ba51029e39a4da3898a7cbc0d9f5f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  occupant: {fileID: 0}
 --- !u!114 &1349395609
 MonoBehaviour:
   m_ObjectHideFlags: 0

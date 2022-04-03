@@ -11,25 +11,15 @@ public class TurnOrderManager : MonoBehaviour
 
     public ICollection<TurnBasedObject>  TurnObjects {get => objects;}
 
-    /**
-    
-        Use in OnEnable() method for objects
-    */
-    public void registerTurnObject(TurnBasedObject obj) {
+    public void Register(TurnBasedObject obj) {
         objects.Add(obj);
-
     }
 
-  /**
-    
-        Use in OnDisable() method for objects
-    */
-    public void unregisterTurnObject(TurnBasedObject obj) {
+    public void Unregister(TurnBasedObject obj) {
         objects.Remove(obj);
-
     }
 
-    public void executeTurns() {
+    public void ExecuteTurns() {
 
         foreach (var obj in objects) {
 

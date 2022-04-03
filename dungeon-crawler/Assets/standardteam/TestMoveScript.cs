@@ -9,25 +9,32 @@ public class TestMoveScript : MonoBehaviour
     public Camera camera;
     public MovementBehavior movementBehavior;
     public GridOccupant gridOccupant;
+    public TurnBasedObject turnBased;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        OnEnable();
+       turnBased.OnStartTurn = OnTurnStart;
+    }
+
+    public void OnTurnStart() {
+
+          Debug.Log("LLLLL test enemy start turn");
+        Vector2Int startPos = gridOccupant.GetCenterCell();
+        int maxSteps = 3;
+        //MoveToMouse(startPos, maxSteps);
+        MoveToPlayer(startPos, maxSteps);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        Vector2Int startPos = gridOccupant.getOccupiedCells()[0];
-        int maxSteps = 3;
-         //Debug.Log("Update Pos");  
+ 
         if (Input.GetMouseButtonDown(0)) {
 
-          //MoveToMouse(startPos, maxSteps);
-          MoveToPlayer(startPos, maxSteps);
+            Debug.Log("LLLLL start turn");
+            GameManager.TurnOrderManager.ExecuteTurns();
+
 
         }
           
@@ -71,15 +78,4 @@ public class TestMoveScript : MonoBehaviour
              Debug.Log("Current Coords" + transform.position);
     }
 
-    void OnEnable() {
-        if (gridOccupant != null) {
-            GameManager.GridOccupantManager.register(gridOccupant);
-        }
-    }
-
-    void OnDisable() {
-        if (gridOccupant != null) {
-            GameManager.GridOccupantManager.unregister(gridOccupant);
-        }
-    }
 }

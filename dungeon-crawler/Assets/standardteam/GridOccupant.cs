@@ -14,6 +14,7 @@ public class GridOccupant : MonoBehaviour
     void Start()
     {
         Transformer = new TransformToSingleCell();
+        OnEnable();
     }
 
     public Vector2Int WorldToGrid(Vector3 worldPos) {
@@ -26,8 +27,12 @@ public class GridOccupant : MonoBehaviour
         return WorldGrid.CellToWorld(vec3);
     }
 
-    public Vector2Int[] getOccupiedCells() {
-        return Transformer.Convert(WorldGrid, positionAnchor);
+    public Vector2Int[] GetOccupiedCells() {
+        return Transformer.GetOccupiedCells(WorldGrid, positionAnchor);
+    }
+
+    public Vector2Int GetCenterCell() {
+        return Transformer.GetCenterCell(WorldGrid, positionAnchor);
     }
 
     public static int ManhattanDistanceTo(Vector2Int startCell, Vector2Int target) {
@@ -41,15 +46,33 @@ public class GridOccupant : MonoBehaviour
 
     public interface TransformToCell {
 
-        Vector2Int[] Convert(Grid WorldGrid, Transform transform);
+        Vector2Int[] GetOccupiedCells(Grid WorldGrid, Transform transform);
+
+        Vector2Int GetCenterCell(Grid WorldGrid, Transform transform);
     }
 
     public class TransformToSingleCell : TransformToCell {
 
-        public Vector2Int[] Convert(Grid WorldGrid, Transform transform) {
+        public Vector2Int[] GetOccupiedCells(Grid WorldGrid, Transform transform) {
             Vector3 rawPosition = transform.position;
             Vector3Int result = WorldGrid.LocalToCell(new Vector3(rawPosition.x, rawPosition.y, 0.0f));
             return new Vector2Int[] { new Vector2Int(result.x, result.y)};
+        }
+
+         public Vector2Int GetCenterCell(Grid WorldGrid, Transform transform) {
+            return GetOccupiedCells(WorldGrid, transform)[0];
+        }
+    }
+
+    void OnEnable() {
+        if (GameManager.GridOccupantManager != null) {
+            GameManager.GridOccupantManager.Register(this);
+        }
+    }
+
+    void OnDisable() {
+        if (GameManager.GridOccupantManager != null) {
+            GameManager.GridOccupantManager.Unregister(this);
         }
     }
 

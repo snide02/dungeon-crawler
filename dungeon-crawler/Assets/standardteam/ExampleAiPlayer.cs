@@ -10,9 +10,7 @@ public class ExampleAiPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       occupant =   GetComponent<GridOccupant>(); 
-       GameManager.Player = gameObject;
-       OnEnable();
+       occupant = GetComponent<GridOccupant>(); 
     }
 
     // Update is called once per frame
@@ -23,17 +21,11 @@ public class ExampleAiPlayer : MonoBehaviour
 
 
     void OnEnable() {
-        if (occupant != null) {
-            GameManager.Player = gameObject;
-            GameManager.GridOccupantManager.register(occupant);
-        }
+        GameManager.Player = gameObject;
     }
 
     void OnDisable() {
-        if (occupant != null) {
-            GameManager.Player = null;
-            GameManager.GridOccupantManager.unregister(occupant);
-        }
+        GameManager.Player = null;
     }
 
 

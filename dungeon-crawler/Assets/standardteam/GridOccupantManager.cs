@@ -7,20 +7,12 @@ public class GridOccupantManager : MonoBehaviour
     private ICollection<GridOccupant> objects = new List<GridOccupant>();
     public ICollection<GridOccupant> GridOccupants {get => objects;}
 
-    /**
-    
-        Use in OnEnable() method for objects
-    */
-    public void register(GridOccupant obj) {
+    public void Register(GridOccupant obj) {
         objects.Add(obj);
 
     }
 
-    /**
-    
-        Use in OnDisable() method for objects
-    */
-    public void unregister(GridOccupant obj) {
+    public void Unregister(GridOccupant obj) {
         objects.Remove(obj);
 
     }
@@ -31,7 +23,7 @@ public class GridOccupantManager : MonoBehaviour
 
         foreach (var obj in objects) {
 
-            Vector2Int[] cells = obj.getOccupiedCells();
+            Vector2Int[] cells = obj.GetOccupiedCells();
             foreach (var cell in cells) {
                 set.Add(cell);
             }           
