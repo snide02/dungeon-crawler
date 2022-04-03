@@ -8,19 +8,13 @@ public class GridOccupant : MonoBehaviour
     public Grid WorldGrid;
     public Transform positionAnchor;
 
+    public TransformToCell Transformer {get; set;}
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Transformer = new TransformToSingleCell();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     public Vector2Int WorldToGrid(Vector3 worldPos) {
         Vector3Int vecInt = WorldGrid.WorldToCell(worldPos);
@@ -32,11 +26,8 @@ public class GridOccupant : MonoBehaviour
         return WorldGrid.CellToWorld(vec3);
     }
 
-    public virtual Vector2Int[] getOccupiedCells() {
-
-        Vector3 rawPosition = positionAnchor.position;
-        Vector3Int result = WorldGrid.LocalToCell(new Vector3(rawPosition.x, rawPosition.y, 0.0f));
-        return new Vector2Int[] { new Vector2Int(result.x, result.y)};
+    public Vector2Int[] getOccupiedCells() {
+        return Transformer.Convert(WorldGrid, positionAnchor);
     }
 
     public static int ManhattanDistanceTo(Vector2Int startCell, Vector2Int target) {
@@ -45,6 +36,21 @@ public class GridOccupant : MonoBehaviour
 
       public static int EuclideanDistanceSquareTo(Vector2Int startCell, Vector2Int target) {
         return (int)((target.y- startCell.y)* (target.y- startCell.y)  + (target.x - startCell.x)*(target.x - startCell.x));
+    }
+
+
+    public interface TransformToCell {
+
+        Vector2Int[] Convert(Grid WorldGrid, Transform transform);
+    }
+
+    public class TransformToSingleCell : TransformToCell {
+
+        public Vector2Int[] Convert(Grid WorldGrid, Transform transform) {
+            Vector3 rawPosition = transform.position;
+            Vector3Int result = WorldGrid.LocalToCell(new Vector3(rawPosition.x, rawPosition.y, 0.0f));
+            return new Vector2Int[] { new Vector2Int(result.x, result.y)};
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MovementBehavior : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class MovementBehavior : MonoBehaviour
     }
 
 
-    public MovementData calculateMoveToTarget(Vector2Int startCell, Vector2Int target, int maxMovementRange) {
+    public MovementData calculateMoveToTarget(Vector2Int startCell, Vector2Int target, int maxMovementRange, Predicate<Vector2Int> isCellOccupied) {
 
             Vector2Int selected = new Vector2Int(startCell.x, startCell.y);
 
@@ -46,6 +47,10 @@ public class MovementBehavior : MonoBehaviour
                 for (int i = 0; i < candidates.Length; i +=1 ) {
 
                     Vector2Int sel = candidates[i];
+
+                    if (isCellOccupied(sel)) {
+                        continue;
+                    } 
                     int dist = GridOccupant.EuclideanDistanceSquareTo(sel, target);
 
                     if (dist < distance) {
