@@ -9,7 +9,7 @@ public class NewBehaviourScript : MonoBehaviour
     int attackPoints=3;//atttack points
     int manaPoints=5; //mana points
     int damageAmount=1;//determines how much damage the player does
-    vector<int> moveSpeed;
+    //vector<int> moveSpeed;
 
     
      bool inRange; //checks to see if enemy is in range for player to move
@@ -45,12 +45,12 @@ public class NewBehaviourScript : MonoBehaviour
                 }
                 else
                 {
-                    cout<<"Not enough Mana Points"<<endl;
+                    //cout<<"Not enough Mana Points"<<endl;
                 }
               }
               else
               {
-                  cout<<"Not Enough Attack Points"<<endl;
+                  //cout<<"Not Enough Attack Points"<<endl;
               }
             }
             if(normalAttack==true)
@@ -62,7 +62,7 @@ public class NewBehaviourScript : MonoBehaviour
                 }
               else
               {
-                  cout<<"Not Enough Attack Points"<<endl;
+                  //cout<<"Not Enough Attack Points"<<endl;
               }
             }
            
