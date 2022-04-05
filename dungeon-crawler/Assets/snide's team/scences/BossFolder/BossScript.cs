@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BossScript : MonoBehaviour
 {
+    public Camera camera;
+    public MovementBehavior movementBehavior;
+    public GridOccupant gridOccupant;
+    public TurnBasedObject turnBased;
     int tileSize;
     int bossX;
     int playerX;
@@ -19,12 +23,25 @@ public class BossScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        turnBased.OnStartTurn = OnTurnStart;
     }
+public void OnTurnStart() {
 
+          Debug.Log("LLLLL test enemy start turn");
+        Vector2Int startPos = gridOccupant.GetCenterCell();
+        int maxSteps = 1;
+        MoveToPlayer(startPos, maxSteps);
+    }
     // Update is called once per frame
     void Update()
     {
+         if (Input.GetMouseButtonDown(0)) {
+
+            Debug.Log("LLLLL start turn");
+            GameManager.TurnOrderManager.ExecuteTurns();
+
+
+        }
         if(bossTurn == true){
             playerPos();
 
@@ -63,6 +80,27 @@ public class BossScript : MonoBehaviour
         }
         
     }
+
+ void MoveToPlayer(Vector2Int startPos, int maxSteps) {
+            Debug.Log("Click Pos " + startPos);   
+            Vector3 worldPos = GameManager.Player.transform.position;
+            
+            Vector2Int target = gridOccupant.WorldToGrid(worldPos);
+             Debug.Log("Target Pos" + target);
+             ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
+
+             Debug.Log("Occupied cell counts is " + occupiedCells.Count );
+             Debug.Log("GridOccupants counts is " + GameManager.GridOccupantManager.GridOccupants.Count );
+            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occupiedCells.Contains);
+          
+
+            Vector3 finished = gridOccupant.GridToWorld(data.CellPosition);
+             Debug.Log("Finished Coords" + finished);
+            
+            transform.position = finished;
+             Debug.Log("Current Coords" + transform.position);
+    }
+
 
     void playerPos(){ //check player position compared to boss
         playerInOne = false;

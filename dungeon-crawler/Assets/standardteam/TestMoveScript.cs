@@ -40,14 +40,14 @@ public class TestMoveScript : MonoBehaviour
           
     }
 
-    void MoveToMouse(Vector2Int startPos, int steps) {
+    void MoveToMouse(Vector2Int startPos, int maxSteps) {
             Debug.Log("Click Pos " + startPos);   
             Vector3 worldPos = camera.ScreenToWorldPoint(Input.mousePosition);
             
             Vector2Int target = gridOccupant.WorldToGrid(worldPos);
              Debug.Log("Target Pos" + target);
  
-            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, 3, cell => false);
+            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, cell => false);
           
 
             Vector3 finished = gridOccupant.GridToWorld(data.CellPosition);
