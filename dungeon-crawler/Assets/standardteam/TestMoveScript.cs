@@ -15,6 +15,24 @@ public class TestMoveScript : MonoBehaviour
     void Start()
     {
        turnBased.OnStartTurn = OnTurnStart;
+       gridOccupant.Transformer = new TransformToThreeCell();
+    }
+
+      public class TransformToThreeCell : GridOccupant.TransformToCell {
+
+        public Vector2Int[] GetOccupiedCells(Vector2Int centerCell) {
+            return new Vector2Int[] {
+                
+                                 centerCell+ new Vector2Int(-1,1), centerCell + new Vector2Int(0,1), centerCell+ new Vector2Int(1,1),
+                                centerCell+ new Vector2Int(-1,0), centerCell + new Vector2Int(0,0), centerCell+ new Vector2Int(1,0),
+                                centerCell+ new Vector2Int(-1,-1), centerCell + new Vector2Int(0,-1), centerCell+ new Vector2Int(1,-1)
+             };
+        }
+
+        public Vector2Int GetCenterCell(Grid WorldGrid, Transform transform) {
+            Vector3 rawPosition = transform.position;
+            return GridOccupant.WorldToGrid(WorldGrid, new Vector3(rawPosition.x, rawPosition.y, 0.0f));
+        }
     }
 
     public void OnTurnStart() {
