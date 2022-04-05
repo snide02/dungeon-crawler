@@ -94,7 +94,7 @@ public void OnTurnStart() {
             MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occupiedCells.Contains);
           
 
-            Vector3 finished = gridOccupant.GridToWorld(data.CellPosition);
+            Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition);
              Debug.Log("Finished Coords" + finished);
             
             transform.position = finished;
