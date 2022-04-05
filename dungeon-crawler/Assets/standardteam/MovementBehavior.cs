@@ -22,13 +22,14 @@ public class MovementBehavior : MonoBehaviour
     }
 
 
-    public MovementData calculateMoveToTarget(Vector2Int startCell, Vector2Int target, int maxMovementRange, Predicate<Vector2Int> isCellOccupied) {
+    public MovementData calculateMoveToTarget(Vector2Int startCell, Vector2Int target, int maxSteps, Predicate<Vector2Int> isCellOccupied) {
 
             Vector2Int selected = new Vector2Int(startCell.x, startCell.y);
 
-            for (int index = maxMovementRange; index > 0; index -=1) {
-                
+            for (int index = maxSteps; index> 0; index -=1) {
+    
 
+                 Debug.Log( "Index ee  " + index);
                 if (GridOccupant.ManhattanDistanceTo(selected, target) <=0 )
                     break;
 
@@ -70,22 +71,20 @@ public class MovementBehavior : MonoBehaviour
                      Debug.Log( "Choose next least " + least);
                   
                 }
-          
+        
             }
-
-
             return new MovementData(selected, GridOccupant.ManhattanDistanceTo(startCell, selected));
     }
 
     public class MovementData {
 
-        public MovementData(Vector2Int cellPosition, int travelDistance) {
+        public MovementData(Vector2Int finalPosition, int travelDistance) {
 
-            CellPosition = cellPosition;
+            FinalPosition = finalPosition;
             TravelDistance = travelDistance;
         }
 
-        public  Vector2Int CellPosition {get;}
+        public Vector2Int FinalPosition {get;}
 
         public int TravelDistance {get;}
     }

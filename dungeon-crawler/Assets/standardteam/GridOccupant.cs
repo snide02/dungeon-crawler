@@ -7,6 +7,7 @@ public class GridOccupant : MonoBehaviour
 
     public Grid WorldGrid;
     public Transform positionAnchor;
+    private bool registered;
 
     public TransformToCell Transformer {get; set;}
 
@@ -65,14 +66,16 @@ public class GridOccupant : MonoBehaviour
     }
 
     void OnEnable() {
-        if (GameManager.GridOccupantManager != null) {
+        if (GameManager.GridOccupantManager != null && !registered) {
             GameManager.GridOccupantManager.Register(this);
+            registered = true;
         }
     }
 
     void OnDisable() {
-        if (GameManager.GridOccupantManager != null) {
+        if (GameManager.GridOccupantManager != null && registered) {
             GameManager.GridOccupantManager.Unregister(this);
+            registered = false;
         }
     }
 

@@ -19,11 +19,16 @@ public class TestMoveScript : MonoBehaviour
 
     public void OnTurnStart() {
 
-          Debug.Log("LLLLL test enemy start turn");
         Vector2Int startPos = gridOccupant.GetCenterCell();
-        int maxSteps = 3;
-        //MoveToMouse(startPos, maxSteps);
+        int maxSteps = 1;
+
+                    Debug.Log("Click Pos " + startPos);   
+    
         MoveToPlayer(startPos, maxSteps);
+
+            Debug.Log("end Pos " + startPos); 
+
+          //MoveToMouse(startPos, maxSteps);
     }
 
     // Update is called once per frame
@@ -50,7 +55,7 @@ public class TestMoveScript : MonoBehaviour
             MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, cell => false);
           
 
-            Vector3 finished = gridOccupant.GridToWorld(data.CellPosition);
+            Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition);
              Debug.Log("Finished Coords" + finished);
             
             transform.position = finished;
@@ -58,24 +63,15 @@ public class TestMoveScript : MonoBehaviour
     }
 
 
-    void MoveToPlayer(Vector2Int startPos, int steps) {
-            Debug.Log("Click Pos " + startPos);   
+    void MoveToPlayer(Vector2Int startPos, int maxSteps) {
             Vector3 worldPos = GameManager.Player.transform.position;
-            
             Vector2Int target = gridOccupant.WorldToGrid(worldPos);
-             Debug.Log("Target Pos" + target);
-             ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
-
-             Debug.Log("Occupied cell counts is " + occupiedCells.Count );
-             Debug.Log("GridOccupants counts is " + GameManager.GridOccupantManager.GridOccupants.Count );
-            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, 3, occupiedCells.Contains);
-          
-
-            Vector3 finished = gridOccupant.GridToWorld(data.CellPosition);
-             Debug.Log("Finished Coords" + finished);
-            
+            ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
+            Predicate<Vector2Int> occipiedCellDetector = occupiedCells.Contains;
+            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occipiedCellDetector);
+            Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition);
             transform.position = finished;
-             Debug.Log("Current Coords" + transform.position);
+
     }
 
 }

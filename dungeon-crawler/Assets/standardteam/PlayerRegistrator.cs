@@ -2,21 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExampleAiPlayer : MonoBehaviour
+public class PlayerRegistrator : MonoBehaviour
 {
 
     public GridOccupant occupant;
 
-    // Start is called before the first frame update
     void Start()
     {
        occupant = GetComponent<GridOccupant>(); 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
 

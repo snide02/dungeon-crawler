@@ -13,6 +13,7 @@ public class TurnBasedObject : MonoBehaviour
 
 
     public UnityAction OnStartTurn;
+    private bool registered;
 
     void Start() {
         OnEnable();
@@ -27,14 +28,16 @@ public class TurnBasedObject : MonoBehaviour
     }
 
      void OnEnable() {
-        if (GameManager.TurnOrderManager != null) {
+        if (GameManager.TurnOrderManager != null && !registered) {
             GameManager.TurnOrderManager.Register(this);
+            registered = true;
         }
     }
 
     void OnDisable() {
-        if (GameManager.TurnOrderManager != null) {
+        if (GameManager.TurnOrderManager != null && registered) {
             GameManager.TurnOrderManager.Unregister(this);
+            registered = false;
         }
     }
 
