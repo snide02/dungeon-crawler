@@ -26,6 +26,8 @@ public class MovementBehavior : MonoBehaviour
 
             Vector2Int selected = new Vector2Int(startCell.x, startCell.y);
 
+            GridOccupant.TransformToCell transformCell = occupant.Transformer;
+
             for (int index = maxSteps; index> 0; index -=1) {
     
 
@@ -48,10 +50,11 @@ public class MovementBehavior : MonoBehaviour
                 for (int i = 0; i < candidates.Length; i +=1 ) {
 
                     Vector2Int sel = candidates[i];
-
-                    if (isCellOccupied(sel)) {
+                
+                    if (isObjectInOccupiedSpace(selected, sel, isCellOccupied, transformCell)) {
                         continue;
                     } 
+
                     int dist = GridOccupant.EuclideanDistanceSquareTo(sel, target);
 
                     if (dist < distance) {
@@ -74,6 +77,22 @@ public class MovementBehavior : MonoBehaviour
         
             }
             return new MovementData(selected, GridOccupant.ManhattanDistanceTo(startCell, selected));
+    }
+
+
+    private bool isObjectInOccupiedSpace(Vector2Int oldPosition, Vector2Int cell, Predicate<Vector2Int> isCellOccupied, GridOccupant.TransformToCell spaceTransformer) {
+        List<Vector2Int> oldCells = new List<Vector2Int>();
+        oldCells.AddRange(spaceTransformer.GetOccupiedCells(oldPosition));
+        Vector2Int[] newOccupiedCells = spaceTransformer.GetOccupiedCells(cell);
+
+        foreach (Vector2Int sel in newOccupiedCells) {
+            if (!oldCells.Contains(sel) && isCellOccupied(sel) ) {
+               return true;
+            } 
+        }
+
+       return false;
+
     }
 
     public class MovementData {
