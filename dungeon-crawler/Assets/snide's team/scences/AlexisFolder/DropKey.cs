@@ -19,7 +19,7 @@ public class DropKey : MonoBehaviour
         //currHealth = GetComponent<EnemyPath>();
     }
 
-    void Update()
+    /*void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -48,6 +48,6 @@ public class DropKey : MonoBehaviour
         enemyPos.y += rndY;
         var key = Instantiate(key.gameObject);//, enemyPos, Quaternion.identity);
         key.GetComponent<Key>();
-    }
+    }*/
 
 }
