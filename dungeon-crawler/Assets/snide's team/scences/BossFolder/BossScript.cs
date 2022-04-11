@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BossScript : MonoBehaviour
-{
+{//welcome to my class
     public Camera camera;
     public MovementBehavior movementBehavior;
     public GridOccupant gridOccupant;
