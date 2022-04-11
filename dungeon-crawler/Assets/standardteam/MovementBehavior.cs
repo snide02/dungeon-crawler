@@ -22,6 +22,30 @@ public class MovementBehavior : MonoBehaviour
     }
 
 
+    /*struct Node {
+
+
+            double costSoFar;
+            double distToTarget;
+            Node previous {get; set;}
+            Vector2Int current;
+
+            Node(Vector2Int current, double costSoFar, double distToTarget) {
+                this.current = current;
+                this.costSoFar = costSoFar;
+                this.distToTarget = distToTarget;
+            }
+
+
+        };
+
+    private void getAStarPath(Vector2Int startCell, Vector2Int target, int maxSteps, Predicate<Vector2Int> isCellOccupied) {
+        ISet<Vector2Int> set = new Hash
+ 
+    }*/
+
+
+
     public MovementData calculateMoveToTarget(Vector2Int startCell, Vector2Int target, int maxSteps, Predicate<Vector2Int> isCellOccupied) {
 
             Vector2Int selected = new Vector2Int(startCell.x, startCell.y);

@@ -15,7 +15,7 @@ public class TestMoveScript : MonoBehaviour
     void Start()
     {
        turnBased.OnStartTurn = OnTurnStart;
-       gridOccupant.Transformer = new TransformToThreeCell();
+       //gridOccupant.Transformer = new TransformToThreeCell();
     }
 
     public class TransformToThreeCell : GridOccupant.TransformToCell {
