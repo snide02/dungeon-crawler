@@ -18,7 +18,7 @@ public class TestMoveScript : MonoBehaviour
        gridOccupant.Transformer = new TransformToThreeCell();
     }
 
-      public class TransformToThreeCell : GridOccupant.TransformToCell {
+    public class TransformToThreeCell : GridOccupant.TransformToCell {
 
         public Vector2Int[] GetOccupiedCells(Vector2Int centerCell) {
             return new Vector2Int[] {

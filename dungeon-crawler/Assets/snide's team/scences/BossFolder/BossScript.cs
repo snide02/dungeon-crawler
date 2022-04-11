@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BossScript : MonoBehaviour
 {//welcome to my class smkde
@@ -24,10 +25,23 @@ public class BossScript : MonoBehaviour
     void Start()
     {
         turnBased.OnStartTurn = OnTurnStart;
+        gridOccupant.Transformer = new TransformToThreeCell();
+    }
+      public class TransformToThreeCell : GridOccupant.TransformToCell {
+
+        public Vector2Int[] GetOccupiedCells(Vector2Int centerCell) {
+            return new Vector2Int[] {
+                        centerCell + new Vector2Int(0,1), centerCell+ new Vector2Int(1,1),
+                        centerCell + new Vector2Int(0,0), centerCell+ new Vector2Int(1,0)
+             };
+        }
+
+        public Vector2Int GetCenterCell(Grid WorldGrid, Transform transform) {
+            Vector3 rawPosition = transform.position;
+            return GridOccupant.WorldToGrid(WorldGrid, new Vector3(rawPosition.x, rawPosition.y, 0.0f));
+        }
     }
 public void OnTurnStart() {
-
-          Debug.Log("LLLLL test enemy start turn");
         Vector2Int startPos = gridOccupant.GetCenterCell();
         int maxSteps = 1;
         MoveToPlayer(startPos, maxSteps);
@@ -82,23 +96,14 @@ public void OnTurnStart() {
     }
 
  void MoveToPlayer(Vector2Int startPos, int maxSteps) {
-            Debug.Log("Click Pos " + startPos);   
-            Vector3 worldPos = GameManager.Player.transform.position;
-            
+             Vector3 worldPos = GameManager.Player.transform.position;
             Vector2Int target = gridOccupant.WorldToGrid(worldPos);
-             Debug.Log("Target Pos" + target);
-             ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
-
-             Debug.Log("Occupied cell counts is " + occupiedCells.Count );
-             Debug.Log("GridOccupants counts is " + GameManager.GridOccupantManager.GridOccupants.Count );
-            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occupiedCells.Contains);
-          
-
+            ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
+            Predicate<Vector2Int> occipiedCellDetector = occupiedCells.Contains;
+            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occipiedCellDetector);
             Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition);
-             Debug.Log("Finished Coords" + finished);
-            
             transform.position = finished;
-             Debug.Log("Current Coords" + transform.position);
+
     }
 
 
