@@ -14,7 +14,9 @@ public class GridOccupant : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Transformer = new TransformToSingleCell();
+        if (Transformer == null) {
+            Transformer = new TransformToSingleCell();
+        }
         OnEnable();
     }
 

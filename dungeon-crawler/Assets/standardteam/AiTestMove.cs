@@ -54,6 +54,7 @@ public class AiTestMove : MonoBehaviour
         if (offset != null) {
             ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
             Predicate<Vector2Int> occipiedCellDetector = occupiedCells.Contains;
+            //Debug.Log("Occupied cell count " + occupiedCells.Count);
             Move(offset.Value,occipiedCellDetector);
         }
     }
