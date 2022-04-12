@@ -140,11 +140,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4624043516714694279, guid: e6cd214c796c44917ad57b4b077ea650, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4624043516714694279, guid: e6cd214c796c44917ad57b4b077ea650, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4624043516714694279, guid: e6cd214c796c44917ad57b4b077ea650, type: 3}
       propertyPath: m_LocalPosition.z
@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoomWidth: 11
+  wallPrefab: {fileID: 696246849600697282, guid: cb1a79229a517e44a81fbeffd0cac3f5, type: 3}
 --- !u!1 &406056223
 GameObject:
   m_ObjectHideFlags: 0
