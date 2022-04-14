@@ -3,35 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
-{ 
-    
-    int healthPoints=20; //health points
-    int attackPoints=3;//atttack points
-    int manaPoints=5; //mana points
-    int damageAmount=1;//determines how much damage the player does
+{  
+    public int healthPoints=20; //health points
+    public int attackPoints=3;//atttack points
+    private int manaPoints=5; //mana points
+    private int damageAmount=1;//determines how much damage the player does
     //vector<int> moveSpeed;
 
+    //5 health when player moves, lasts for 10 turns)
+      public bool isBleed;
+     public bool inRange; //checks to see if enemy is in range for player to move
+    public bool playerTurn;    //checks to see if player turn
+    public bool commit; //changes when player decides that is where they want to be before they end their turn
+    public bool normalAttack;
+    private bool skillAttack;
+     
+    private int mpCost=1;
+    private bool inCombat;
+  public TestPlayerController movement;
+    public GridOccupant positionUpdate;
     
-     bool inRange; //checks to see if enemy is in range for player to move
-    bool playerTurn;    //checks to see if player turn
-    bool commit; //changes when player decides that is where they want to be before they end their turn
-    bool normalAttack;
-    bool skillAttack;
-    int mpCost=1;
     // Start is called before the first frame update
     
         void Start()
         {
-       
-    
+            positionUpdate = GetComponent<GridOccupant>();
          }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if(playerTurn== true)
-        {
+      
+      if(   inCombat==1)
+      {
+
+      
             
             if(skillAttack==true)
             {
@@ -41,8 +47,11 @@ public class NewBehaviourScript : MonoBehaviour
                 {
                     //dmg boss 
                     manaPoints-=mpCost;
-                    attackPoints-=2;
+                    attackPoints-=2; 
+                    if (isBleed==true)
+                {healthPoints-=1;}
                 }
+               
                 else
                 {
                     //cout<<"Not enough Mana Points"<<endl;
@@ -52,24 +61,35 @@ public class NewBehaviourScript : MonoBehaviour
               {
                   //cout<<"Not Enough Attack Points"<<endl;
               }
-            }
-            if(normalAttack==true)
-            {
+            
+              if(normalAttack==true)
+              {
               if(attackPoints>1)
                 {    //dmg boss 
                     manaPoints-=mpCost;
                     attackPoints-=1;
+                    if (isBleed==true)
+                {healthPoints-=1;}
                 }
               else
               {
-                  //cout<<"Not Enough Attack Points"<<endl;
+                    //cout<<"Not Enough Attack Points"<<endl;
               }
             }
-           
-
+            GameManager.TurnOrderManager.ExecuteTurns();
+        }      
+    
+     
+     
+     
+    
+      else
+      {
+        if (isBleed==true)
+        {
+        healthPoints-=1;
         }
-            
-
-        
+      }
     }
-}
+  }
+}//for the public class
