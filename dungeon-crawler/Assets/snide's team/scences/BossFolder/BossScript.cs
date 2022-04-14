@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BossScript : MonoBehaviour
-{
+{//welcome to my class smkde
+    public Camera camera;
+    public MovementBehavior movementBehavior;
+    public GridOccupant gridOccupant;
+    public TurnBasedObject turnBased;
     int tileSize;
     int bossX;
     int playerX;
@@ -19,12 +24,38 @@ public class BossScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        turnBased.OnStartTurn = OnTurnStart;
+        gridOccupant.Transformer = new TransformToThreeCell();
     }
+      public class TransformToThreeCell : GridOccupant.TransformToCell {
 
+        public Vector2Int[] GetOccupiedCells(Vector2Int centerCell) {
+            return new Vector2Int[] {
+                        centerCell + new Vector2Int(0,1), centerCell+ new Vector2Int(1,1),
+                        centerCell + new Vector2Int(0,0), centerCell+ new Vector2Int(1,0)
+             };
+        }
+
+        public Vector2Int GetCenterCell(Grid WorldGrid, Transform transform) {
+            Vector3 rawPosition = transform.position;
+            return GridOccupant.WorldToGrid(WorldGrid, new Vector3(rawPosition.x, rawPosition.y, 0.0f));
+        }
+    }
+public void OnTurnStart() {
+        Vector2Int startPos = gridOccupant.GetCenterCell();
+        int maxSteps = 1;
+        MoveToPlayer(startPos, maxSteps);
+    }
     // Update is called once per frame
     void Update()
     {
+         if (Input.GetMouseButtonDown(0)) {
+
+            Debug.Log("LLLLL start turn");
+            GameManager.TurnOrderManager.ExecuteTurns();
+
+
+        }
         if(bossTurn == true){
             playerPos();
 
@@ -63,6 +94,18 @@ public class BossScript : MonoBehaviour
         }
         
     }
+
+ void MoveToPlayer(Vector2Int startPos, int maxSteps) {
+             Vector3 worldPos = GameManager.Player.transform.position;
+            Vector2Int target = gridOccupant.WorldToGrid(worldPos);
+            ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
+            Predicate<Vector2Int> occipiedCellDetector = occupiedCells.Contains;
+            MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occipiedCellDetector);
+            Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition);
+            transform.position = finished;
+
+    }
+
 
     void playerPos(){ //check player position compared to boss
         playerInOne = false;
