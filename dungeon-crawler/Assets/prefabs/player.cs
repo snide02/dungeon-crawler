@@ -34,7 +34,7 @@ public class NewBehaviourScript : MonoBehaviour
     void Update()
     {
       
-      if(   inCombat==1)
+      if(inCombat==true)
       {
 
       

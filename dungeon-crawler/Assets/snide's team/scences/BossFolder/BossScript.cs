@@ -14,6 +14,9 @@ public class BossScript : MonoBehaviour
     int playerX;
     int playerHealth;
 
+    Vector3 bossPos;
+    Vector3 playerPos;
+
     bool playerInOne; //check if player in range for ground slam
     bool playerInTwo; //check if player in range for bite
     bool playerInSix; //check if player in range for web shot
@@ -41,7 +44,7 @@ public class BossScript : MonoBehaviour
             return GridOccupant.WorldToGrid(WorldGrid, new Vector3(rawPosition.x, rawPosition.y, 0.0f));
         }
     }
-public void OnTurnStart() {
+    public void OnTurnStart() {
         Vector2Int startPos = gridOccupant.GetCenterCell();
         int maxSteps = 1;
         MoveToPlayer(startPos, maxSteps);
@@ -49,15 +52,15 @@ public void OnTurnStart() {
     // Update is called once per frame
     void Update()
     {
-         if (Input.GetMouseButtonDown(0)) {
+        playerPos = GameManager.Player.transform.position; //test player's postion
+        bossPos = transform.position; //Enemy's position
+        if (Input.GetMouseButtonDown(0)) {
 
             Debug.Log("LLLLL start turn");
             GameManager.TurnOrderManager.ExecuteTurns();
-
-
         }
-        if(bossTurn == true){
-            playerPos();
+        /*if(bossTurn == true){
+            compare();
 
             if(groundSlamCharging == true){
                 //play ground slam attack animation
@@ -91,23 +94,25 @@ public void OnTurnStart() {
                     //bossX = bossX + tileSize;
                 }
             }
-        }
+        }*/
         
+        Debug.Log("Player Position" + playerPos);
+        Debug.Log("Boss Position" + bossPos);
     }
 
  void MoveToPlayer(Vector2Int startPos, int maxSteps) {
-             Vector3 worldPos = GameManager.Player.transform.position;
-            Vector2Int target = gridOccupant.WorldToGrid(worldPos);
+            Vector3 worldPos = GameManager.Player.transform.position; //test player's postion
+            Vector2Int target = gridOccupant.WorldToGrid(worldPos); //where enemy is trying to get too
             ISet<Vector2Int> occupiedCells = GameManager.GridOccupantManager.GetObtructedCells();
             Predicate<Vector2Int> occipiedCellDetector = occupiedCells.Contains;
             MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occipiedCellDetector);
-            Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition);
-            transform.position = finished;
+            Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition); //calculates the psotion to move too
+            transform.position = finished; //moves the enemy
 
     }
 
 
-    void playerPos(){ //check player position compared to boss
+    void compare(){ //check player position compared to boss
         playerInOne = false;
         playerInTwo = false;
         playerInSix = false;
