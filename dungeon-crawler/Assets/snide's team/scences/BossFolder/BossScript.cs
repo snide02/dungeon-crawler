@@ -9,20 +9,15 @@ public class BossScript : MonoBehaviour
     public MovementBehavior movementBehavior;
     public GridOccupant gridOccupant;
     public TurnBasedObject turnBased;
-    int tileSize;
-    int bossX;
-    int playerX;
     int playerHealth;
-
     Vector3 bossPos;
     Vector3 playerPos;
-
     bool playerInOne; //check if player in range for ground slam
     bool playerInTwo; //check if player in range for bite
     bool playerInSix; //check if player in range for web shot
-    bool bossMove; //checks if boss needs to move towards player
-    bool groundSlamCharging; //checks if ground slam is being chraged
-    bool bossTurn; //checks if it is the boss' turn
+    bool bossMove = false; //checks if boss needs to move towards player
+    bool groundSlamCharging = false; //checks if ground slam is being chraged
+    bool bossAttack = false; //checks if it is the boss' turn
 
     // Start is called before the first frame update
     void Start()
@@ -47,21 +42,24 @@ public class BossScript : MonoBehaviour
     public void OnTurnStart() {
         Vector2Int startPos = gridOccupant.GetCenterCell();
         int maxSteps = 1;
-        MoveToPlayer(startPos, maxSteps);
+        if(bossMove){
+            MoveToPlayer(startPos, maxSteps);
+        } else{
+            bossAttack = true;
+        }
     }
     // Update is called once per frame
     void Update()
     {
+        compare();
         playerPos = GameManager.Player.transform.position; //test player's postion
         bossPos = transform.position; //Enemy's position
+        playerHealth = GameManager.Player.GetComponent<player>().healthPoints;
         if (Input.GetMouseButtonDown(0)) {
-
             Debug.Log("LLLLL start turn");
             GameManager.TurnOrderManager.ExecuteTurns();
         }
-        /*if(bossTurn == true){
-            compare();
-
+        if(bossAttack == true);{
             if(groundSlamCharging == true){
                 //play ground slam attack animation
                 if(playerInOne == true){
@@ -86,18 +84,17 @@ public class BossScript : MonoBehaviour
 
                 if (playerInSix == true){
                     //play webshot animation
-
-                }
-
-                if (bossMove == true){
-                    //move boss towards player
-                    //bossX = bossX + tileSize;
+                    GameManager.Player.GetComponent<player>().isWebbed = true;
+                    //accesses the Player Object from the GameManager, then through the player script it accesses the isWebbed boolean.
                 }
             }
-        }*/
+            bossAttack = false;
+        }
         
-        Debug.Log("Player Position" + playerPos);
-        Debug.Log("Boss Position" + bossPos);
+        //Debug.Log("Player Position" + playerPos);
+        //Debug.Log("Boss Position" + bossPos);
+        //Debug.Log("bossMove is" + bossMove);
+        //Debug.Log("isWebbed= " +  GameManager.Player.GetComponent<player>().isWebbed);
     }
 
  void MoveToPlayer(Vector2Int startPos, int maxSteps) {
@@ -108,7 +105,6 @@ public class BossScript : MonoBehaviour
             MovementBehavior.MovementData data =  movementBehavior.calculateMoveToTarget(startPos, target, maxSteps, occipiedCellDetector);
             Vector3 finished = gridOccupant.GridToWorld(data.FinalPosition); //calculates the psotion to move too
             transform.position = finished; //moves the enemy
-
     }
 
 
@@ -118,25 +114,27 @@ public class BossScript : MonoBehaviour
         playerInSix = false;
         bossMove = false;
 
-        if(playerX == bossX + 1){
+        float distance = Math.Abs(playerPos.y) - Math.Abs(bossPos.y) + Math.Abs(playerPos.x) - Math.Abs(bossPos.x);
+
+        if(1 == distance){
             playerInOne = true;
             playerInTwo = false;
             playerInSix = false;
             bossMove = false;
         }
-        if(playerX == bossX + 2){
+        if(2 == distance){
             playerInOne = false;
             playerInTwo = true;
             playerInSix = false;
             bossMove = false;
         }
-        if(playerX >= bossX + 3){
+        if(3 <= distance){
             playerInOne = false;
             playerInTwo = false;
             playerInSix = true;
             bossMove = false;
         }
-        if(playerX >= bossX + 6){
+        if(6 <= distance){
             playerInOne = false;
             playerInTwo = false;
             playerInSix = false;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class player : MonoBehaviour
 {  
     public int healthPoints=20; //health points
     public int attackPoints=3;//atttack points
@@ -12,6 +12,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     //5 health when player moves, lasts for 10 turns)
       public bool isBleed;
+      public bool isWebbed;
      public bool inRange; //checks to see if enemy is in range for player to move
     public bool playerTurn;    //checks to see if player turn
     public bool commit; //changes when player decides that is where they want to be before they end their turn
