@@ -25,16 +25,21 @@ public class player : MonoBehaviour
     public GridOccupant positionUpdate;
     
     // Start is called before the first frame update
-    
-        void Start()
+    public float MovementSpeed = 1;
+       private void Start()
         {
             positionUpdate = GetComponent<GridOccupant>();
          }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-      
+      //Movement
+
+        var movement = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(movement,0,0) *Time.deltaTime * MovementSpeed;
+
+     //Combat section 
       if(inCombat==true)
       {
 
