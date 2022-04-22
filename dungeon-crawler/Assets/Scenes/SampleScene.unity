@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce2d9b7638545040846a2df087f36b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 20
+  healthPoints: 17
   attackPoints: 3
   isBleed: 0
   isWebbed: 0
@@ -247,6 +247,7 @@ MonoBehaviour:
   normalAttack: 0
   movement: {fileID: 0}
   positionUpdate: {fileID: 0}
+  MovementSpeed: 20
 --- !u!65 &1181846614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -319,7 +320,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181846612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.96, y: 0.35, z: 0}
+  m_LocalPosition: {x: -1.38, y: 0.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
