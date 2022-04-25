@@ -9,6 +9,7 @@ public class RoomGenerationMaze : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject doorPrefab;
     public Transform player;
+    public GameObject room;
 
     public int MazeRoomWidth;
     public int MazeRoomHeight;
@@ -274,6 +275,7 @@ public class RoomGenerationMaze : MonoBehaviour
         ColorWall(topRight, type);
         ColorWall(bottomleft, type);
         ColorWall(bottomRight, type);
+        GameObject roomsprite = Instantiate(room, Grid.CellToLocal(new Vector3Int(gridx+8, gridY+6, 0)), Quaternion.identity);
 
 
     }
@@ -425,6 +427,7 @@ public class RoomGenerationMaze : MonoBehaviour
 
 
     public void DrawPaths(IDictionary<Vector2Int, List<Vector2Int>> dictionary) {
+        if(dictionary == null) {return;}
         foreach (Vector2Int room in dictionary.Keys)
         {
 
