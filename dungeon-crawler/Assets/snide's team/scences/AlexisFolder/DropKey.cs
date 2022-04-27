@@ -5,35 +5,35 @@ using UnityEngine;
 public class DropKey : MonoBehaviour
 {
     public int credits = 1;
-    private Vector3 enemyPos;
+    private Vector3 chestPos;
     private bool dropOnce = false;
-    public int currHealth;
+    public int chestHealth = 1;
 
 
     [Header("Key")]
     [SerializeField] protected Key keyPrefab;
-    //[SerializeField] protected int keyVal;
 
     void Start()
     {
-        //currHealth = GetComponent<EnemyPath>();
+
     }
 
-    /*void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            currHealth.updatehealth(1);
-            DropKey();
+            chestHealth--;
+            Drop();
         }
     }
 
-    public void DropKey()
+    public void Drop()
     {
 
-        if (currHealth.health <= 0 && dropOnce == false)
+        if (chestHealth <= 0 && dropOnce == false)
         {
             InstantiateKey();
+            Destroy(gameObject);
 
             dropOnce = true;
         }
@@ -41,13 +41,9 @@ public class DropKey : MonoBehaviour
 
     protected virtual void InstantiateKey()
     {
-        enemyPos = gameObject.transform.position;
-        var rndX = Random.Range(0, 3);
-        var rndY = Random.Range(0, 3);
-        enemyPos.x += rndX;
-        enemyPos.y += rndY;
-        var key = Instantiate(key.gameObject);//, enemyPos, Quaternion.identity);
+        chestPos = gameObject.transform.position;
+        var key = Instantiate(keyPrefab.gameObject, chestPos, Quaternion.identity);
         key.GetComponent<Key>();
-    }*/
+    }
 
 }
