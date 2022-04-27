@@ -7,7 +7,7 @@ public class player : MonoBehaviour
     public int healthPoints=20; //health points
     public int attackPoints=3;//atttack points
     private int manaPoints=5; //mana points
-    private int damageAmount=1;//determines how much damage the player does
+    public int damageAmount=1;//determines how much damage the player does
     //vector<int> moveSpeed;
 
     //5 health when player moves, lasts for 10 turns)
