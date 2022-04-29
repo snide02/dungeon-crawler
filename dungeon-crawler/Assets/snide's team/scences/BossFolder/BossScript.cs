@@ -9,6 +9,7 @@ public class BossScript : MonoBehaviour
     public MovementBehavior movementBehavior;
     public GridOccupant gridOccupant;
     public TurnBasedObject turnBased;
+    private SpriteRenderer renderer;
     int playerHealth;
     Vector3 bossPos;
     Vector3 playerPos;
@@ -22,6 +23,7 @@ public class BossScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        renderer = GetComponent<SpriteRenderer>();
         turnBased.OnStartTurn = OnTurnStart;
         gridOccupant.Transformer = new TransformToThreeCell();
     }
@@ -58,6 +60,11 @@ public class BossScript : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             Debug.Log("LLLLL start turn");
             GameManager.TurnOrderManager.ExecuteTurns();
+        }
+        if (playerPos.x > bossPos.x){
+            renderer.flipX = true;
+        } else{
+            renderer.flipX = false;
         }
         if(bossAttack == true);{
             if(groundSlamCharging == true){
