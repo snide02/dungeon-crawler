@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RoomGenerationMaze : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class RoomGenerationMaze : MonoBehaviour
     public GameObject doorPrefab;
     public Transform player;
     public GameObject room;
+
+    public GameObject Mummy;
+    public GameObject thief;
+    public GameObject boss;
+    public GameObject stairs;
+    public GameObject chest;
+    public GameObject daboss;
 
     public int MazeRoomWidth;
     public int MazeRoomHeight;
@@ -276,6 +284,33 @@ public class RoomGenerationMaze : MonoBehaviour
         ColorWall(bottomleft, type);
         ColorWall(bottomRight, type);
         GameObject roomsprite = Instantiate(room, Grid.CellToLocal(new Vector3Int(gridx+8, gridY+6, 0)), Quaternion.identity);
+        if (type == RoomType.EASY)
+        {
+            Instantiate(Mummy, Grid.CellToLocal(new Vector3Int(gridx + (Random.Range(1, RoomWidth)), gridY + (Random.Range(1, RoomWidth)), 0)), Quaternion.identity);
+
+        }
+
+        if (type == RoomType.MEDIUM)
+        {
+            Instantiate(thief, Grid.CellToLocal(new Vector3Int(gridx + (Random.Range(1, RoomWidth)), gridY + (Random.Range(1, RoomWidth)), 0)), Quaternion.identity);
+            Instantiate(thief, Grid.CellToLocal(new Vector3Int(gridx + (Random.Range(1, RoomWidth)), gridY + (Random.Range(1, RoomWidth)), 0)), Quaternion.identity);
+
+        }
+
+        if (type == RoomType.HARD)
+        {
+            Instantiate(thief, Grid.CellToLocal(new Vector3Int(gridx + (Random.Range(1, RoomWidth)), gridY + (Random.Range(1, RoomWidth)), 0)), Quaternion.identity);
+            Instantiate(thief, Grid.CellToLocal(new Vector3Int(gridx + (Random.Range(1, RoomWidth)), gridY + (Random.Range(1, RoomWidth)), 0)), Quaternion.identity);
+            Instantiate(Mummy, Grid.CellToLocal(new Vector3Int(gridx + (Random.Range(1, RoomWidth)), gridY + (Random.Range(1, RoomWidth)), 0)), Quaternion.identity);
+
+        }
+
+        if (type == RoomType.BOSS)
+        {
+            daboss = Instantiate(boss, Grid.CellToLocal(new Vector3Int(gridx + 1 + (Random.Range(RoomWidth / 2, RoomWidth / 2)), gridY + 1 + (Random.Range(RoomWidth / 2, RoomWidth / 2)), 0)), Quaternion.identity);
+
+
+        }
 
 
     }
