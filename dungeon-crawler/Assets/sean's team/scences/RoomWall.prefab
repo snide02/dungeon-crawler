@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4624043516714694279}
   - component: {fileID: -3311031839345814046}
+  - component: {fileID: 2772403851090104221}
   m_Layer: 0
   m_Name: RoomWall
   m_TagString: Untagged
@@ -45,3 +46,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldGrid: {fileID: 0}
   positionAnchor: {fileID: 4624043516714694279}
+--- !u!114 &2772403851090104221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5916829862387411861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d12dd16de97664988e85e8af862ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grid: {fileID: 0}
+  griddy: {fileID: 0}
+  placeholder: {fileID: 0}

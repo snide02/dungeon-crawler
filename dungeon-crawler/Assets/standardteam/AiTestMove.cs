@@ -5,7 +5,8 @@ using System;
 
 public class AiTestMove : MonoBehaviour
 {
-
+    public bool atdoor = false;
+    public Vector3 towhere;
     private GridOccupant GridOccupant;
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,11 @@ public class AiTestMove : MonoBehaviour
             //Debug.Log("Occupied cell count " + occupiedCells.Count);
             Move(offset.Value,occipiedCellDetector);
         }
+
+        if(atdoor == true && Input.GetKeyDown(KeyCode.Space))
+        {
+            teleport(towhere);
+        }
     }
 
 
@@ -69,5 +75,29 @@ public class AiTestMove : MonoBehaviour
             transform.position = position; 
         }
     }
+    
+    public void teleport(Vector3 destination)
+    {
+            
+            transform.position = destination;
+            
+        
+        
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        
+        DoorTeleportDestination destination = other.GetComponent<DoorTeleportDestination>();
+        towhere = destination.teleportDestination;
+        atdoor = true;
+    }
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        atdoor = false;
+    }
+
+
+
 
 }
