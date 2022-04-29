@@ -431,6 +431,12 @@ MonoBehaviour:
   doorPrefab: {fileID: 696246849600697282, guid: 73378a56c37f06f4b8a623e06280cd49, type: 3}
   player: {fileID: 1925538204}
   room: {fileID: 2342265328212666982, guid: b3c5855698799cd4396f5de7f8fd7407, type: 3}
+  Mummy: {fileID: 696246849600697282, guid: dd2ac3b453e742b418bd620a1c42ac39, type: 3}
+  thief: {fileID: 696246849600697282, guid: 6432967227a153e4e9af6a05ac700d43, type: 3}
+  boss: {fileID: 696246849600697282, guid: dd68c976352860a4e8a29136b7c68f79, type: 3}
+  stairs: {fileID: 696246849600697282, guid: 1b58b605f2785db408b86b3a26fbd818, type: 3}
+  chest: {fileID: 696246849600697282, guid: 503b1214aea886945b90f3479a4bd85c, type: 3}
+  daboss: {fileID: 696246849600697282, guid: cb0bccb24f82f6048833b52246593abc, type: 3}
   MazeRoomWidth: 10
   MazeRoomHeight: 10
   RoomWidth: 11
