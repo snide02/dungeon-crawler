@@ -9,6 +9,7 @@ namespace DungeonGame {
         public static TurnOrderManager TurnOrderManager {get; set;}
         public static GridOccupantManager GridOccupantManager {get; set;}
         public static Vector2Int? CurrentPlayerRoom {get; set;}
+        public static RoomGeneration RoomGenerator {get; set;}
 
         void Start() {
         

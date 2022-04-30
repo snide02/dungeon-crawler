@@ -9,11 +9,13 @@ namespace DungeonGame {
         public MovementBehavior movementBehavior;
         public GridOccupant gridOccupant;
         public TurnBasedObject turnBased;
+        private AiCheckPlayerRoom CheckPlayerRoom;
 
         // Start is called before the first frame update
         void Start()
         {
             turnBased.OnStartTurn = OnTurnStart;
+            CheckPlayerRoom = GetComponent<AiCheckPlayerRoom>();
             //gridOccupant.Transformer = new TransformToThreeCell();
         }
 
@@ -36,6 +38,8 @@ namespace DungeonGame {
 
         public void OnTurnStart() {
 
+            if (!CheckPlayerRoom.IsInSameRoomAsPlayer())
+                return;
             Vector2Int startPos = gridOccupant.GetCenterCell();
             int maxSteps = 1;
             Debug.Log("Click Pos " + startPos);   
@@ -45,14 +49,7 @@ namespace DungeonGame {
             //MoveToMouse(startPos, maxSteps);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            if (Input.GetMouseButtonDown(0)) {
-                GameManager.TurnOrderManager.ExecuteTurns();
-            }
-            
-        }
+ 
 
         void MoveToPlayer(Vector2Int startPos, int maxSteps) {
                 Vector3 worldPos = GameManager.Player.transform.position;

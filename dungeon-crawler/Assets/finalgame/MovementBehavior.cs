@@ -85,7 +85,7 @@ namespace DungeonGame {
 
                         if (dist < distance) {
 
-                            Debug.Log( "Choose new min " + least + " - "+ sel + " -  " + dist);
+                            //Debug.Log( "Choose new min " + least + " - "+ sel + " -  " + dist);
                             least = sel;
                             distance = dist;
                         }
@@ -93,11 +93,11 @@ namespace DungeonGame {
 
 
                     if (least == selected) {
-                        Debug.Log( "Skip next least " + least + " - " + selected);
+                        //Debug.Log( "Skip next least " + least + " - " + selected);
                         break;
                     } else {
                         selected = least;
-                        Debug.Log( "Choose next least " + least);
+                        //Debug.Log( "Choose next least " + least);
                     
                     }
             

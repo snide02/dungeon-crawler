@@ -65,7 +65,7 @@ namespace DungeonGame {
 
 
 
-                bosschest = setWorldGrid(Grid, Instantiate(chest, Grid.CellToLocal(new Vector3Int(thex, they, thez)), Quaternion.identity));
+                
 
 
                 setWorldGrid(Grid, Instantiate(stairs, Grid.CellToLocal(new Vector3Int(thex, they+1, thez)), Quaternion.identity));
@@ -152,12 +152,20 @@ namespace DungeonGame {
 
 
 
-        (int, int) convertRoomToGrid(int roomX, int roomY)
+        public (int, int) convertRoomToGrid(int roomX, int roomY)
         {
             int gridx = roomX * (RoomWidth + 2) + roomX * RoomGap;
             int gridy = roomY * (RoomWidth + 2) + roomY * RoomGap;
 
             return (gridx, gridy);
+        }
+
+        public (int, int) convertGridToRoom(int gridx, int gridy)
+        {
+            int roomx = gridx / (RoomWidth + 2 + RoomGap);
+            int roomy = gridy / (RoomWidth + 2 + RoomGap);
+
+            return (roomx, roomy);
         }
 
 
@@ -356,8 +364,10 @@ namespace DungeonGame {
 
             }
 
-       
-           
+            if (type == RoomType.KEY_CHEST || type == RoomType.ITEM_CHEST)
+            {
+                setWorldGrid(Grid, Instantiate(chest, Grid.CellToLocal(new Vector3Int(gridx +1+ (Random.Range(RoomWidth/2, RoomWidth/2)), gridY +1+ (Random.Range(RoomWidth / 2, RoomWidth / 2)), 0)), Quaternion.identity));
+            }   
 
 
         }
@@ -588,6 +598,14 @@ namespace DungeonGame {
                 occupant.WorldGrid = this.Grid;
             }
             return obj;
+        }
+
+        void OnEnable() {
+            GameManager.RoomGenerator = this;
+        }
+
+        void OnDisable() {
+            GameManager.RoomGenerator = null;
         }
 
     }
