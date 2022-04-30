@@ -9,10 +9,18 @@ namespace DungeonGame {
         public bool atdoor = false;
         public Vector3 towhere;
         private GridOccupant GridOccupant;
+
+        AudioSource AudioSource;
+        public AudioClip footstepsSound;
+        public AudioClip doorSound;
+        int footstepsCounter = 2; //used to limit number of times sound effect plays
+        
+
         // Start is called before the first frame update
         void Start()
         {
             GridOccupant = GetComponent<GridOccupant>();
+            AudioSource = GetComponent<AudioSource>();
         }
 
 
@@ -69,7 +77,16 @@ namespace DungeonGame {
 
             if (!isCellOccupied(candidate)) {
                 Vector3 position = GridOccupant.GridToWorld(candidate);
-                transform.position = position; 
+                transform.position = position;
+
+                //play sound unless past limit
+                if (footstepsCounter < 1)
+                {
+                    footstepsCounter++;
+                } else {
+                    AudioSource.PlayOneShot(footstepsSound, 0.50f);
+                    footstepsCounter = 0;
+                }
             } else {
                 var occupants = GameManager.GridOccupantManager.GetOccupantsAt(candidate);
 
@@ -78,6 +95,7 @@ namespace DungeonGame {
                     DoorTeleportDestination destination = occupant.GetComponent<DoorTeleportDestination>();
 
                     if (destination != null) {
+                        AudioSource.PlayOneShot(doorSound, 0.75f);
                         transform.position = destination.teleportDestination; 
                     }
                 }
