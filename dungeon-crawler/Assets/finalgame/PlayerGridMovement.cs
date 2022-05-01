@@ -10,7 +10,9 @@ namespace DungeonGame {
         public Vector3 towhere;
         private GridOccupant GridOccupant;
 
-        AudioSource AudioSource;
+
+        GameObject AudioHolder;
+        AudioController AudioController;
         public AudioClip footstepsSound;
         public AudioClip doorSound;
         int footstepsCounter = 2; //used to limit number of times sound effect plays
@@ -20,7 +22,9 @@ namespace DungeonGame {
         void Start()
         {
             GridOccupant = GetComponent<GridOccupant>();
-            AudioSource = GetComponent<AudioSource>();
+            GameObject AudioHolder = GameObject.FindWithTag("AudioPlayer");
+
+            AudioController = AudioHolder.GetComponent<AudioController>();
         }
 
 
@@ -84,7 +88,7 @@ namespace DungeonGame {
                 {
                     footstepsCounter++;
                 } else {
-                    AudioSource.PlayOneShot(footstepsSound, 0.50f);
+                    AudioController.PlaySound(footstepsSound, -0.5f);
                     footstepsCounter = 0;
                 }
             } else {
@@ -95,7 +99,7 @@ namespace DungeonGame {
                     DoorTeleportDestination destination = occupant.GetComponent<DoorTeleportDestination>();
 
                     if (destination != null) {
-                        AudioSource.PlayOneShot(doorSound, 0.75f);
+                        AudioController.PlaySound(doorSound, -0.25f);
                         transform.position = destination.teleportDestination; 
                     }
                 }
